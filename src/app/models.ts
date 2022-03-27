@@ -29,7 +29,31 @@ export interface Driver {
     url: string;
 }
 
+export interface WinnerResponse {
+    winners: Winner[];
+}
+
 export interface Winner {
     season: number;
     driver: Driver;
+}
+
+export interface Result {
+    races: Race[]
+}
+
+export interface Race {
+    season: string;
+    raceName: string;
+    date: string;
+    Circuit: Circuit;
+    Results: RaceResult[]
+}
+
+export interface Circuit {
+    circuitName: string;
+}
+
+export interface RaceResult {
+    Driver: Driver
 }

@@ -1,0 +1,40 @@
+<h3>F1 Winners</h3>
+
+<button class="p-button p-button-secondary" (click)="sort()">Sort</button>
+
+<p-table [value]="winnersList" styleClass="p-datatable-striped p-datatable-gridlines">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                Sezon
+            </th>
+            <th>
+                Kierowca
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-winner>
+        <tr>
+            <td class="left-tab">
+
+            </td>
+            <td class="season">
+                {{winner.season }}
+            </td>
+            <td class="name">
+                {{winner.driver.givenName}} {{winner.driver.familyName}}
+            </td>
+            <td class="details">
+                <button class="p-button p-button-secondary" type="button" [routerLink]="[winner.season]">
+                    Podgląd
+                </button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

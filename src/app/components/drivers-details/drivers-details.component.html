@@ -1,0 +1,42 @@
+<div *ngIf="raceResult">
+    <p-table [value]="raceResult.races" styleClass="p-datatable-striped p-datatable-gridlines">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    Nazwa
+                </th>
+                <th>
+                    Data
+                </th>
+                <th>
+                    Zwycięzca
+                </th>
+                <th>
+                    Kraj
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-race>
+            <tr>
+                <td class="left-tab">
+
+                </td>
+                <td>
+                    {{race.raceName }}
+                </td>
+                <td>
+                    {{race.date }}
+                </td>
+                <td>
+                    {{race.Results[0].Driver.givenName}} {{race.Results[0].Driver.familyName}}
+                </td>
+                <td>
+                    {{race.Results[0].Driver.nationality}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
