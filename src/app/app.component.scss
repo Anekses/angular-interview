@@ -1,0 +1,47 @@
+$text-color: #ECEAAC;
+$background-color: #203E45;
+
+.root {
+    width: 960px;
+    margin: 8px auto;
+}
+
+.container {
+    list-style-type: none;
+    color: $text-color;
+    padding: 0;
+    height: 100%;
+}
+
+.record {
+    background-color: $background-color;
+    margin: 8px auto;
+    height: 48px;
+    display: flex;
+    align-items: center;
+}
+
+.left-tab {
+    background: #B15863;
+    width: 16px;
+    height: 100%;
+    margin-right: 8px;
+}
+
+.season {
+    margin-right: 8px;
+}
+
+.name {
+    text-transform: uppercase;
+}
+
+.sort-button {
+    background-color: $background-color;
+    color: $text-color;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}

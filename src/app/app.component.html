@@ -1,7 +1,19 @@
-<h3>F1 Winners</h3>
+<div class="root">
+  <h3>F1 Winners</h3>
 
-<ul>
-  <li *ngFor="let winner of winnersList">
-    {{winner.season }} {{winner.driver.givenName}} {{winner.driver.familyName }}
-  </li>
-</ul>
+  <button class="sort-button" (click)="sort()">Sort</button>
+
+  <ul class="container">
+    <li class="record" *ngFor="let winner of winnersList">
+      <span class="left-tab">
+
+      </span>
+      <span class="season">
+        {{winner.season }} |
+      </span>
+      <span class="name">
+        {{winner.driver.givenName}} {{winner.driver.familyName}}
+      </span>
+    </li>
+  </ul>
+</div>

@@ -1,11 +1,35 @@
-import { Component } from '@angular/core';
-import { IWinner } from './winner';
+import { DriversService } from './drivers.service';
+import { Component } from '@angular/core'
+import { Driver, DriverResponse, Winner } from './models';
+import { Subject, takeUntil } from 'rxjs';
 
-const handleItems = (competitions: any[] ) => {
-  const result: any[] = [];
+enum SortingOptions {
+  ASC = 'ASC',
+  DESC = 'DESC'
+}
+
+const handleItems = (competitions: DriverResponse[]) => {
+  const result: Winner[] = [];
   // below create code to manipulate items
   // to get required number of items in requested order
-  return []
+
+
+  competitions.forEach((comp: DriverResponse) => {
+    const season: number = parseInt(comp.season);
+    const driver: Driver = comp.DriverStandings[0].Driver
+
+    const isSeasonBetween2006and2020 = season <= 2020 && season >= 2006
+
+    if (isSeasonBetween2006and2020) {
+      result.push({
+        season,
+        driver
+      })
+    }
+
+  })
+
+  return result
 }
 
 @Component({
@@ -14,20 +38,32 @@ const handleItems = (competitions: any[] ) => {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  private destroy$ = new Subject<boolean>();
+
   title = 'Angular';
+  winnersList: Winner[] = [];
+  sortOption = SortingOptions.DESC
 
-  winnersList: IWinner[] = [];
+  constructor(private driversService: DriversService) { }
 
-  constructor() {
+  sort(): void {
+    const isSortOptionASC = this.sortOption === SortingOptions.ASC
+
+    this.winnersList.sort((first: Winner, second: Winner) => (isSortOptionASC ? first.season - second.season : second.season - first.season))
+    this.sortOption = isSortOptionASC ? SortingOptions.DESC : SortingOptions.ASC
   }
 
   ngOnInit(): void {
-    // task 1. Data are not loading - why?
-    fetch('http://ergast.com/api/f1/driverStandings/1.json?limit=300')
-      .then(response => response.json())
-      .then(data => {
-        //inspect data to return proper info
-        this.winnersList = handleItems(data.MRData.StandingsTable.StandingsLists)
-      })
+    this.driversService
+      .getDrivers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(((response: any) => {
+        this.winnersList = handleItems(response.MRData.StandingsTable.StandingsLists)
+      }))
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }
